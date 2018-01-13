@@ -1,2 +1,0 @@
-Main-Class: com.metCS633Project.METCS633ProjectMain
-
