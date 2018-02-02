@@ -1,0 +1,356 @@
+/*                                 MISC                                        */
+*{
+ font-family: Arial;
+ margin: 0;
+ padding: 0;
+ border: 0;
+ background-size:cover;
+ -webkit-background-size:cover;
+ -o-background-size:cover;
+ -moz-background-size:cover;
+}
+
+.social-icon {
+ height: 28px;
+ width: 28px;
+ margin-right: 10px;
+ margin-left: 10px;
+ border: none;
+ outline: none;
+ cursor: pointer;
+}
+
+html,body {
+ width: 100%;
+ height: 100%;
+ overflow-x: hidden;
+}
+
+.left {
+ float: left;
+ clear: right;
+}
+
+.right {
+ float: right;
+ clear: left;
+}
+
+#welcome-span {
+ color: white;
+ margin-right: 300px;
+ float: right;
+ margin-top: -30px;
+}
+
+#logout-button {
+ float: right;
+ clear: left;
+ padding: 15px;
+ font-size: 14pt;
+ border-radius: 20px;
+ margin-right: 10px;
+ background-color: transparent;
+ color: white;
+ border: 2px solid white;
+ margin-top: -50px;
+ cursor: pointer;
+}
+ 
+/*******************************************************************************/ 
+
+/*                                 DIVS                                        */                          
+div {
+ position: relative;
+}
+
+#banner,#links,#main,#footer {
+ width: 100%;
+}
+
+#banner-inner,#links-inner,#main-inner {
+}
+
+#banner {
+ background-image: url("./media/printing2.jpg");
+ height: 655px;
+}
+
+#links {
+ height: 40px;
+ background-color: black;
+}
+
+#main {
+ min-height: 90%;
+ width: 60%;
+ left: 20%;
+}
+
+#order-product-div {
+ width: 80%;
+}
+
+#second-icon {
+ background-image: url("./media/printing.png");
+ width: 100%;
+ height: 600px; 
+}
+
+#copyright-div {
+ font-size: 12px;
+}
+
+#powered-by-div {
+ font-size: 10px;
+}
+
+#footer {
+ height: 373px;
+ padding-top: 50px;
+ padding-bottom: 50px;
+ font-size: 10px;
+ text-align: center;
+ color: white;
+ background-color: #373A39;
+}
+
+h1 {
+ color: #FFFFFF;
+ font-size: 48px; 
+}
+
+h3 {
+ color: #FFFFFF;
+ font-size: 16;
+}
+
+#moto-span {
+ font-size: 37pt;
+ font-weight: bold;
+ color: white;
+ width: 630px;
+ top: 200px;
+ left: 45%;
+}
+
+.detail-header {
+ margin-top: 20px;
+ font-weight: bold;
+ font-size: 14pt;
+}
+
+.detail-description {
+ font-size: 12pt;
+}
+
+/*******************************************************************************/                          
+
+/*                                 LINK                                        */                          
+a{
+ text-decoration: none;
+}
+
+#banner a{
+ color: white;
+}
+
+#footer a{
+ color: white;
+}
+/*******************************************************************************/                          
+
+/*                                 TABL                                        */                          
+#member-table{
+ width: 100%;
+ border-collapse: collapse;
+}
+
+#member-table td,#member-table th{
+ border: 2px solid black;
+ text-align: left;
+}
+
+.member-header{
+ text-align: center;
+ background-color: teal;
+ color: white;
+}
+
+.member-header th{
+ text-align: center;
+}
+
+#links-table {
+ width: 100%;
+ height: 40px;
+ border-collapse: collapse;
+}
+
+#links-table th {
+ border-left: 2px solid white;
+ color: white;
+ border-right: 2px solid white;
+ cursor: pointer;
+}
+
+.selected-page {
+ background-color: aqua;
+}
+
+#pricing-table {
+ width: 100%;
+ margin-top: 20px;
+ border-collapse: collapse;
+}
+
+#pricing-table th {
+ text-align: left;
+ border: 2px solid black;
+}
+
+#pricing-table td {
+ text-align: left;
+ border: 2px solid black;
+}
+
+#cart-grid {
+ width: 80%;
+ border-collapse: separate;
+ border-spacing: 20px;
+}
+/*******************************************************************************/                          
+
+/*                                 FORM                                        */                          
+#reg-form {
+ width: 100%;
+}
+
+#reg-form .label {
+ float: left;
+ width: 49%;
+ height: 40px;
+}
+
+#reg-form input[type=text],#reg-form input[type=password],#reg-form select {
+ float: right;
+ width: 49%;
+ height: 40px;
+ border: 2px solid black;
+}
+
+#reg-form input[type=submit],#reg-form input[type=reset]{
+ width: 49%;
+ height: 40px;
+}
+
+#reg-form input[type=submit] {
+ float: left;
+}
+
+#reg-form input[type=reset] {
+ float: right;
+}
+
+#login-form {
+ margin-top: -50px;
+}
+
+#login-form input[type=text],#login-form input[type=password],#login-form input[type=submit]{
+ height: 40px;
+ width: 250px;
+}
+
+#clear-cart-form input {
+ width: 80%;
+ height: 40px;
+ background-color: grey;
+}
+
+#order-type-form input[type=submit] {
+ width: 80%;
+ height: 60px;
+ background-color: grey;
+}
+
+#order-options-form {
+ width: 80%;
+}
+
+#order-options-form .label {
+ float: left;
+ clear: left;
+ text-align: left;
+ width: 50%;
+ height: 40px;
+}
+
+#order-options-form input[type=text], #order-options-form input[type=file],#order-options-form select {
+ float: right;
+ width: 50%;
+ height: 40px;
+ border: 2px solid black;
+}
+
+#order-options-form input[type=submit] {
+ width: 100%;
+ height: 40px;
+}
+
+/*******************************************************************************/                          
+
+/*                                 BUTN                                        */
+#login-link {
+ float: right;
+ clear: left;
+ margin-right: 25px;
+ font-size: 14pt;
+ color: white;
+ margin-top: -35px;
+ cursor:pointer;
+}
+
+#dashboard-link {
+ float: right;
+ clear: left;
+ margin-right: 120px;
+ font-size: 14pt;
+ color: white;
+ margin-top: -30px;
+ cursor:pointer;
+}
+
+#register-button {
+ float: right;
+ clear: left;
+ padding: 15px;
+ font-size: 14pt;
+ border-radius: 20px;
+ margin-right: 10px;
+ background-color: transparent;
+ color: white;
+ border: 2px solid white;
+ margin-top: -50px;
+ cursor:pointer;
+}
+
+.dashboard-button {
+ width: 300px;
+ height: 200px;
+ background-color: grey;
+ margin-bottom: 10px;
+ color: black;
+ cursor: pointer;
+}
+
+.product-info {
+ width: 30px;
+ height: 30px;
+ color: white;
+ float: right;
+ cursor: pointer;
+ margin-bottom: 50px;
+}
+/*******************************************************************************/
+
+                          
