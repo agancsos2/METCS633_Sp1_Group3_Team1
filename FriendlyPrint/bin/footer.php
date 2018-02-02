@@ -32,7 +32,7 @@
       <a href = "./services.php">Services</a> &nbsp; | &nbsp;
       <a href = "./pricing.php">Pricing</a>
 	  <?php
-		if($SESSION__USER != "")
+		if($SESSION_USER2 != "")
 		{
 			print("&nbsp; | &nbsp;<a href = \"./dashboard.php\">Dashboard</a>");
 		}
