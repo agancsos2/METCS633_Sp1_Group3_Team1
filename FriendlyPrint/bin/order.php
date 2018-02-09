@@ -40,6 +40,7 @@
 		}
 		print("<div class = 'label'>Quantity</div><input type='text' name='quant'/>");
 		print("<input type = 'submit' name = 'add_cart' value = 'Add to Cart'/>");
+        print("<input type = 'submit' name = 'view_cart' value = 'View Cart' />");
 		print("</form>");
 
 		if(isset($_POST['add_cart']))
@@ -61,6 +62,10 @@
             	$temp_order->quantity = $quant;
 				add_order($temp_order);
 			}
+		}
+		else if(isset($_POST['view_cart']))
+		{
+			?><script>goto_page('cart.php');</script><?php
 		}
 	}
  ?>

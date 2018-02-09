@@ -112,6 +112,109 @@
 	}
 
 	//
+	// This function retrieves the customer's order history
+	//
+	function get_history($account_id)
+	{
+        $m_result = array();
+		$getter = mysql_query("select * from receipt where user_id = '$account_id' order by last_updated_date desc");
+
+		// Loop through receipts (finalized orders)
+		while($data = mysql_fetch_assoc($getter))
+		{
+			$temp_receipt = new Receipt();
+			$temp_receipt->id2 = $data['receipt_id'];
+			$temp_receipt->user2 = $account_id;
+			$temp_receipt->total = $data['receipt_total'];
+			$temp_receipt->paid = $data['receipt_paid'];
+			$temp_receipt->payment_type = $data['payment_type'];
+			$temp_receipt->payment_detail = $data['payment_detail'];
+			$temp_receipt->last_updated_date = $data['last_updated_date'];
+			$temp_receipt->payment_date = $data['payment_date'];
+			$temp_orders = array();
+        	$getter2 = mysql_query("select * from receipt_order where receipt_id = '" . $temp_receipt->id2 . "'");
+
+			// Loop through receipt items
+        	while($data2 = mysql_fetch_assoc($getter2))
+        	{
+				$getter3 = mysql_query("select * from orders where order_id = '" . $data2['order_id'] . "'");
+
+				// Extract order details
+				while($data3 = mysql_fetch_assoc($getter3))
+				{
+            		$temp_order = new Order();
+            		$temp_order->user2 = $account_id;
+            		$temp_order->id2 = $data3['order_id'];
+            		$temp_order->filename = $data3['order_filename'];
+            		$temp_order->finish = $data3['order_finish'];
+            		$temp_order->status = $data3['order_status'];
+            		$temp_order->sheets = $data3['order_sheets'];
+            		$temp_order->size = $data3['order_size'];
+            		$temp_order->type2 = $data3['order_type'];
+            		$temp_order->quantity = $data3['order_quantity'];
+            		$temp_order->last_updated_date = $data3['last_updated_date'];
+            		array_push($temp_orders,$temp_order);
+				}
+			}
+            $temp_receipt->orders = $temp_orders;
+
+			array_push($m_result,$temp_receipt);
+        }
+        return $m_result;
+	}
+
+	//
+	// This function retrieves the specic receipt 
+	//
+	function get_receipt($account_id,$receipt_id)
+	{
+        $m_result = array();
+        $getter = mysql_query("select * from receipt where user_id = '$account_id' and receipt_id = '$receipt_id'");
+
+        // Loop through receipts (finalized orders)
+        while($data = mysql_fetch_assoc($getter))
+        {
+            $temp_receipt = new Receipt();
+            $temp_receipt->id2 = $data['receipt_id'];
+            $temp_receipt->user2 = $account_id;
+            $temp_receipt->total = $data['receipt_total'];
+            $temp_receipt->paid = $data['receipt_paid'];
+            $temp_receipt->payment_type = $data['payment_type'];
+            $temp_receipt->payment_detail = $data['payment_detail'];
+            $temp_receipt->last_updated_date = $data['last_updated_date'];
+            $temp_receipt->payment_date = $data['payment_date'];
+            $temp_orders = array();
+            $getter2 = mysql_query("select * from receipt_order where receipt_id = '" . $temp_receipt->id2 . "'");
+
+            // Loop through receipt items
+            while($data2 = mysql_fetch_assoc($getter2))
+            {
+                $getter3 = mysql_query("select * from orders where order_id = '" . $data2['order_id'] . "'");
+
+                // Extract order details
+                while($data3 = mysql_fetch_assoc($getter3))
+                {
+                    $temp_order = new Order();
+                    $temp_order->user2 = $account_id;
+                    $temp_order->id2 = $data3['order_id'];
+                    $temp_order->filename = $data3['order_filename'];
+                    $temp_order->finish = $data3['order_finish'];
+                    $temp_order->status = $data3['order_status'];
+                    $temp_order->sheets = $data3['order_sheets'];
+                    $temp_order->size = $data3['order_size'];
+                    $temp_order->type2 = $data3['order_type'];
+                    $temp_order->quantity = $data3['order_quantity'];
+                    $temp_order->last_updated_date = $data3['last_updated_date'];
+                    array_push($temp_orders,$temp_order);
+                }
+            }
+			$temp_receipt->orders = $temp_orders;
+            array_push($m_result,$temp_receipt);
+        }
+        return $m_result;
+	}
+
+	//
 	// This function retrieves the order history for the specified account
 	//
 	function get_orders($account_id)
@@ -153,6 +256,16 @@
 	}
 
 	//
+	// This function retrieves the location data for the user.
+	//
+	function get_location($attribute,$id)
+	{
+		$getter = mysql_query("select * from $attribute where ".$attribute."_id = $id");
+		$data = mysql_fetch_assoc($getter);
+		return $data['short_description'];
+	}
+
+	//
 	// This function returns the account object for the specified user
 	//
 	function get_account($user)
@@ -163,7 +276,77 @@
 		$m_result->id2 = $data['user_id'];
         $m_result->first_name = $data['first_name'];
         $m_result->last_name = $data['last_name'];
+		$m_result->address = $data['address'];
+		$m_result->city = get_location("city",$data['city_id']);
+		$m_result->state = get_location("state",$data['state_id']);
+		$m_result->zip_code = $data['zip_code'];
 		return $m_result;
+	}
+
+	//
+	// This function purges order history for a user
+	//
+	function purge_history($account_id)
+	{
+		if(mysql_query("delete from receipt_order where receipt_id in (select receipt_id from receipt where user_id = '$account_id')"))
+		{
+			mysql_query("delete from receipt where user_id = '$account_id'");
+		}
+	}
+
+	//
+	// This function submits the order
+	//
+	function submit_order($sp,$pm,$pd,$dis,$SESSION_ACCOUNT)
+	{
+        $total = 0.00;
+        $cart = get_cart($SESSION_ACCOUNT->id2);
+        foreach($cart as $order)
+        {
+
+            $total += ((get_price($order->type2,"size",$order->size) +
+                    get_price($order->type2,"finish",$order->finish)) *
+                    $order->sheets * $order->quantity);
+		}
+		if($dis != "")
+		{
+			$total = $toal - .75;
+		}
+
+    	// Create receipt
+		$sql = "insert into receipt(user_id,receipt_total,receipt_paid,payment_type,payment_detail,payment_date) values (";
+		$sql .= ("'".$SESSION_ACCOUNT->id2."','$total','1','$pm','$pd',current_timestamp)");
+		if(!mysql_query($sql))
+		{
+			return False;
+		}
+
+		$getter = mysql_query("select receipt_id from receipt where user_id = '".$SESSION_ACCOUNT->id2."' order by receipt_id desc limit 1");
+		$data = mysql_fetch_assoc($getter);
+		$receipt_id = $data['receipt_id'];
+
+       	// Add receipt orders
+		$sql = "insert into receipt_order (receipt_id,order_id) values ('$receipt_id',(select order_id from cart where user_id = '";
+		$sql .= ($SESSION_ACCOUNT->id2."'))");
+		if(!mysql_query($sql))
+		{
+			return False;
+		}
+
+       	// Update orders to Submitted
+		if(!mysql_query("update orders set order_status = 'Submitted' where order_id in (select order_id from cart where user_id = '".
+			$SESSION_ACCOUNT->id2."')"))
+		{
+			return False;
+		}
+
+       	// Remove orders from cart
+		if(!mysql_query("delete from cart where user_id = '".$SESSION_ACCOUNT->id2."'"))
+		{
+			return False;
+		}
+
+		return True;
 	}
 
 	//

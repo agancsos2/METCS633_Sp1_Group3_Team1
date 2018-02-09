@@ -17,15 +17,18 @@
 			}
 
 			print("<td>");
-			print("Order ID: " . $order->id2 . "<br />");
-            print("File    : " . $order->filename . "<br />");
-            print("Size    : " . $order->size . "<br />");
-            print("Finish  : " . $order->finish . "<br />");
-            print("Quantity: " . $order->quantity . "<br />");
-            print("Sheets  : " . $order->sheets . "<br />");
+			print("<table id = 'order-prop-table'>");
+			print("<tr>");
+			print("<td>Order ID: " . $order->id2 . "</td>");
+            print("<td>File    : " . $order->filename . "</td>");
+            print("<td>Size    : " . $order->size . "</td></tr><tr>");
+            print("<td>Finish  : " . $order->finish . "</td>");
+            print("<td>Quantity: " . $order->quantity . "</td>");
+           	print("<td>Sheets  : " . $order->sheets . "</td></tr>");
+			print("</table>");
 			print("</td>");
-			// Calculate the total
 
+			// Calculate the total
 			$total += ((get_price($order->type2,"size",$order->size) + 
 					get_price($order->type2,"finish",$order->finish)) * 
 					$order->sheets * $order->quantity);
@@ -38,10 +41,11 @@
 		}
  	?>
   <tr>
-   <td>Total: $<?php print($total); ?></td>
+   <td class = "total-cell">Total: $<?php print($total); ?></td>
   </tr>
  </table>
  <form id = 'clear-cart-form' method = "POST">
+  <input type = "submit" name = "checkout" value = "Proceed to Checkout"/>
   <input type = "submit" name = "clear-cart" value = "Clear Cart"/>
  </form>
  <?php
@@ -49,6 +53,10 @@
 	{
 		clear_cart($SESSION_ACCOUNT->id2);
 		?><script>goto_page('cart.php');</script><?php
+	}
+	else if(isset($_POST['checkout']))
+	{
+		?><script>goto_page('checkout.php');</script><?php
 	}
  ?>
 </center>

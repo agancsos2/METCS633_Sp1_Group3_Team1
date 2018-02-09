@@ -99,7 +99,7 @@
 
 	$sql = "create table if not exists user(user_id int(255) not null primary key auto_increment,";
     $sql .= "first_name char(120) default '',last_name char(255) default '',username char(120) not null,";
-    $sql .= "password varchar(512) not null,city_id int(255),state_id int(255),country_id int(255),address varchar(512),";
+    $sql .= "password varchar(512) not null,city_id int(255),state_id int(255),country_id int(255),zip_code varchar(7),address varchar(512),";
     $sql .= "status int(1) not null default '1',last_updated_date timestamp default current_timestamp,";
     $sql .= "foreign key (city_id) references city (city_id),foreign key (state_id) references state(state_id),";
     $sql .= "foreign key (country_id) references country(country_id)";

@@ -15,7 +15,8 @@
 	 <a target = "self" href = "https://github.com/agancsos2/METCS633_Sp1_Group3_Team1">Friendly Print, Inc</a></div>
      <br />
      <br />
-     One Silber Way · Acron, OH 12345 <br />
+     <?php print(read_config("./config","PRINT_SHOP_ADDRESS")); ?> · <?php print(read_config("./config","PRINT_SHOP_CITY")); ?>, 
+	 <?php print(read_config("./config","PRINT_SHOP_STATE")); ?> <?php print(read_config("./config","PRINT_SHOP_ZIP")); ?> <br />
      metcs633s12018g3t1@gmail.com <br />
      <br />
 	 <br />

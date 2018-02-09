@@ -3,12 +3,24 @@
   <title>Friendly Print</title>
   <meta name = "keywords" content = "" />
   <meta name = "author" content = "MET CS633 Spring 1 2018 Group 3 Team 1" />
+  <meta name = "description" content = "" />
+  <meta name = "source" content = "https://github.com/agancsos2/METCS633_Sp1_Group3_Team1/tree/master/FriendlyPrint" />
   <link href = "main.css" rel = "stylesheet" type = "text/css" />
   <?php
     error_reporting(0);
     ini_set('display_errors', '0');
   ?>
   <script language = "javascript">
+   function unhide_payment(payment_type)
+   {
+   		if(payment_type == "Credit Card")
+		{
+			var obj1 = document.getElementById('credit-card-label');
+			var obj2 = document.getElementById('credit-card-detail');
+			obj1.style.visibility = "visible";
+			obj2.style.visibility = "visible";
+		}
+   }
    function goto_page(page)
    {
    		window.location = page;

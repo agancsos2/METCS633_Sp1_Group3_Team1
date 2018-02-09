@@ -214,11 +214,21 @@ a{
  border: 2px solid black;
 }
 
+#order-prop-table {
+ width: 100%;
+ margin-bottom: 25px;
+}
+
 #cart-grid {
  width: 80%;
  border-collapse: separate;
  border-spacing: 20px;
 }
+
+#cart-grid .total-cell {
+ font-size: 24px;
+}
+
 /*******************************************************************************/                          
 
 /*                                 FORM                                        */                          
@@ -264,6 +274,8 @@ a{
 #clear-cart-form input {
  width: 80%;
  height: 40px;
+ margin-bottom: 10px;
+ cursor: pointer;
  background-color: grey;
 }
 
@@ -271,6 +283,7 @@ a{
  width: 80%;
  height: 60px;
  background-color: grey;
+ cursor: pointer;
 }
 
 #order-options-form {
@@ -280,6 +293,15 @@ a{
 #order-options-form .label {
  float: left;
  clear: left;
+ text-align: left;
+ width: 50%;
+ height: 40px;
+}
+
+#order-options-form .label2 {
+ float: right;
+ clear: right;
+ outline: 2px solid black;
  text-align: left;
  width: 50%;
  height: 40px;
@@ -295,6 +317,8 @@ a{
 #order-options-form input[type=submit] {
  width: 100%;
  height: 40px;
+ margin-bottom: 10px;
+ cursor: pointer;
 }
 
 /*******************************************************************************/                          

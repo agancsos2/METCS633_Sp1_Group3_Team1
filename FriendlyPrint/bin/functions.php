@@ -404,12 +404,15 @@
         $key_pairs = explode("\n",file_get_contents($path));
 		foreach($key_pairs as $key_value)
 		{
-			$pairs = explode("=",$key_value);
-			if(sizeof($pairs) == 2)
+			if($key_value[0] != "#")
 			{
-				if(trim($pairs[0]) == $key)
+				$pairs = explode("=",$key_value);
+				if(sizeof($pairs) == 2)
 				{
-					return trim($pairs[1]);
+					if(trim($pairs[0]) == $key)
+					{
+						return trim($pairs[1]);
+					}
 				}
 			}
 		}
