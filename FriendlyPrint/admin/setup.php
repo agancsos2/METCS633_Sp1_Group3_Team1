@@ -14,7 +14,7 @@
  	$cities = array("Boston","Hawthorne");
 	foreach($cities as $city)
 	{
-		if(mysql_num_rows(mysql_query("select * from city where short_description='$city'",$__DB__CONNECT)) == 0)
+		if(mysql_num_rows(mysql_query("select * from city where short_description='$city'",$DB__CONNECT)) == 0)
 		{
     		array_push($queries,"insert into city (short_description) values ('$city')");
 		}
@@ -78,7 +78,7 @@
 
 	foreach($states as $state2)
 	{
-		if(mysql_num_rows(mysql_query("select * from state where short_description='$state2'",$__DB__CONNECT)) == 0)
+		if(mysql_num_rows(mysql_query("select * from state where short_description='$state2'",$DB__CONNECT)) == 0)
 		{
 			array_push($queries,"insert into state (short_description) values ('$state2')");
 		}
@@ -89,7 +89,7 @@
     $countries = array("USA");
 	foreach($countries as $country)
 	{
-		if(mysql_num_rows(mysql_query("select * from country where short_description='$country'",$__DB__CONNECT)) == 0)
+		if(mysql_num_rows(mysql_query("select * from country where short_description='$country'",$DB__CONNECT)) == 0)
 		{
     		array_push($queries,"insert into country (short_description) values ('$country')");
 		}
@@ -112,7 +112,7 @@
 
 	foreach($users as $user)
 	{
-		if(mysql_num_rows(mysql_query("select * from user where first_name='$user'",$__DB__CONNECT)) == 0)
+		if(mysql_num_rows(mysql_query("select * from user where first_name='$user'",$DB__CONNECT)) == 0)
 		{
 			$sql = "insert into user (first_name,last_name,username,password,city_id,state_id,country_id,address) values ";
 			$sql .= "('$user','user','$user@example.com','test123','1','1','1','123 Main Street')";
