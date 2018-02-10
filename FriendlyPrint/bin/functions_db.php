@@ -308,7 +308,7 @@
                     get_price($order->type2,"finish",$order->finish)) *
                     $order->sheets * $order->quantity);
 		}
-		if($dis != "")
+		if($dis == read_config("./config","DISCOUNT_CODE"))
 		{
 			$total = $toal - .75;
 		}

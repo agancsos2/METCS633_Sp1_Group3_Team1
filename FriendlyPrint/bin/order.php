@@ -49,7 +49,7 @@
 			$quant = $_POST['quant'];
 			$finish = $_POST['finish'];
 			$size = $_POST['size'];
-			if($quant != "" && $finish != "" && $size != "")
+			if($quant != "" && $finish != "" && $size != "" && is_numeric($quant))
 			{
 				$temp_order = new Order();
             	$temp_order->user2 = $SESSION_ACCOUNT->id2;
@@ -61,6 +61,10 @@
             	$temp_order->type2 = $_POST['product_type'];
             	$temp_order->quantity = $quant;
 				add_order($temp_order);
+			}
+			else if(!is_numeric($quant))
+			{
+				print("Discount code is invalid...");
 			}
 		}
 		else if(isset($_POST['view_cart']))
