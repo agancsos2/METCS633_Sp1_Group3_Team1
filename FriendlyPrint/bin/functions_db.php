@@ -226,19 +226,22 @@
 	//
 	function add_order($order)
 	{
-		$sql = "insert into orders (user_id,order_filename,order_sheets,order_size";
-		$sql .= ",order_finish,order_quantity,order_status,order_type) values (";
-		$sql .= ("'" . $order->user2 . "','".$order->filename."','".$order->sheets."',");
-		$sql .= ("'".mysql_real_escape_string($order->size)."','".$order->finish."','".$order->quantity."','");
-		$sql .= ($order->status."','".$order->type2."'");
-		$sql .= ")";
+            if($order->quantity > 0)
+            {
+                $sql = "insert into orders (user_id,order_filename,order_sheets,order_size";
+                $sql .= ",order_finish,order_quantity,order_status,order_type) values (";
+                $sql .= ("'" . $order->user2 . "','".$order->filename."','".$order->sheets."',");
+                $sql .= ("'".mysql_real_escape_string($order->size)."','".$order->finish."','".$order->quantity."','");
+                $sql .= ($order->status."','".$order->type2."'");
+                $sql .= ")";
 
-		if(mysql_query($sql))
-		{
-			$getter2 = mysql_query("select * from orders order by last_updated_date desc limit 1");
-			$d = mysql_fetch_assoc($getter2);
-			mysql_query("insert into cart (user_id,order_id,cart_finalized) values ('".$order->user2."','".$d['order_id']."','0')");
-		}
+                if(mysql_query($sql))
+                {
+                    $getter2 = mysql_query("select * from orders order by last_updated_date desc limit 1");
+                    $d = mysql_fetch_assoc($getter2);
+                    mysql_query("insert into cart (user_id,order_id,cart_finalized) values ('".$order->user2."','".$d['order_id']."','0')");
+                }
+            }
 	}
 
 	//
