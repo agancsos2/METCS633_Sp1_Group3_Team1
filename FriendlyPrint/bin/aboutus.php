@@ -3,7 +3,7 @@
  require_once("header.php");
  require_once("functions_db.php");
 ?>
- Innovative Print Shop, IPS, is an Ohio based print shop company that seeks to
+Innovative Print Shop, IPS, is an Ohio based print shop company that seeks to
 gain a larger share in their business market. Specifically, IPS wishes to build a
 customer base in the neighboring states of Indiana and Kentucky. Currently,
 IPS’s operations are limited to servicing local customers that visit their store in

@@ -151,7 +151,7 @@
 
 
 	$sql = "create table if not exists receipt(receipt_id int(255) not null primary key auto_increment,";
-    $sql .= "user_id int(255) not null, receipt_total float(10,2) default '0.00',shipping_speed varchar(120) default 'Standard'";
+    $sql .= "user_id int(255) not null, receipt_total float(10,2) default '0.00',shipping_speed varchar(120) default 'Standard',";
     $sql .= "receipt_paid int(1) default '0', payment_type varchar(120), payment_detail varchar(120),";
     $sql .= "last_updated_date timestamp default current_timestamp,payment_date timestamp,";
     $sql .= "foreign key (user_id) references user (user_id))";
@@ -162,7 +162,37 @@
     $sql .= "foreign key (receipt_id) references receipt (receipt_id),foreign key (order_id) references orders (order_id))";
     array_push($queries,$sql);
 
+	$sql = "create table if not exists shipping_option(shipping_option_id int(255) not null primary key auto_increment,";
+	$sql .= "shipping_option_label varchar(120),shipping_option_days varchar(120),shipping_option_fee varchar(120))";
+	array_push($queries,$sql);
 
+	$shipping_options = array("Standard","Express","Pickup");
+    foreach($shipping_options as $shipping_option)
+    {
+        if(mysql_num_rows(mysql_query("select * from shipping_option where shipping_option_label='$shipping_option'",$DB__CONNECT)) == 0)
+        {
+			if($shipping_option == "Standard")
+			{
+				$sql = "insert into shipping_option (shipping_option_label,shipping_option_days,shipping_option_fee) values (";
+				$sql .= "'$shipping_option','3-5 business days','10.00')";
+            	array_push($queries,$sql);
+			}
+			else if($shipping_option == "Express")
+            {
+                $sql = "insert into shipping_option (shipping_option_label,shipping_option_days,shipping_option_fee) values (";
+                $sql .= "'$shipping_option','1-2 business days','24.00')";
+                array_push($queries,$sql);
+            }
+			else if($shipping_option == "Pickup")
+            {
+                $sql = "insert into shipping_option (shipping_option_label,shipping_option_days,shipping_option_fee) values (";
+                $sql .= "'$shipping_option','Any Location','0.00')";
+                array_push($queries,$sql);
+            }
+        }
+    }
+
+	
 	foreach($queries as $query)
 	{
 		print("## $query\n");

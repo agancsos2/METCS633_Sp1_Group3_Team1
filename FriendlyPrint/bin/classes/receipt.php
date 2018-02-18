@@ -12,6 +12,7 @@
 		public $payment_detail;
 		public $payment_date;
         public $last_updated_date;
+		public $shipping_option;
 		public $orders;
 
         function __construct()

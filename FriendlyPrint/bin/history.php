@@ -23,13 +23,12 @@
 				print("<table id = 'order-prop-table'>");
 				print("<tr>");
             	print("<td>Receipt ID    : " . $receipt->id2 . "</td>");
-            	print("<td>Paid          : " . $receipt->paid . "</td>");
-            	print("<td>Total         : $" . $receipt->total . "</td></tr><tr>");
-            	print("<td>Payment Type  : " . $receipt->payment_type . "</td>");
+            	print("<td>Paid          : " . $receipt->paid . "</td></tr><tr>");
+            	print("<td>Total         : $" . $receipt->total . "</td>");
+            	print("<td>Payment Type  : " . $receipt->payment_type . "</td></tr><tr>");
            		print("<td>Payment Detail: " . $receipt->payment_detail . "</td>");
+				print("<td>Shipping      : " . $receipt->shipping_option . "</td></tr><tr>");
             	print("<td>Last Updated  : " . $receipt->last_updated_date . "</td></tr>");
-				print("</table>");
-            	print("</td>");
 
 				print("<tr>");
 				if($total != 0.00)
@@ -38,7 +37,7 @@
 				}
 				print("</tr>");
 				print("</table>");
-
+				print("</td>");
         		if($receipt_index == 0 || ($receipt_index > 1 && $receipt_index % 4 == 0))
             	{
                 	print("</tr>");

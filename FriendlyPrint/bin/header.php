@@ -17,8 +17,30 @@
 		{
 			var obj1 = document.getElementById('credit-card-label');
 			var obj2 = document.getElementById('credit-card-detail');
+            var obj3 = document.getElementById('credit-card-ccv');
+            var obj4 = document.getElementById('credit-card-ccv2');
+            var obj5 = document.getElementById('credit-card-month');
+            var obj6 = document.getElementById('credit-card-month2');
+            var obj7 = document.getElementById('credit-card-year');
+            var obj8 = document.getElementById('credit-card-year2');
+            var obj9 = document.getElementById('credit-card-fn');
+            var obj10 = document.getElementById('credit-card-fn2');
+            var obj11 = document.getElementById('credit-card-ln');
+            var obj12 = document.getElementById('credit-card-ln2');
+
 			obj1.style.visibility = "visible";
 			obj2.style.visibility = "visible";
+            obj3.style.visibility = "visible";
+            obj4.style.visibility = "visible";
+            obj5.style.visibility = "visible";
+            obj6.style.visibility = "visible";
+            obj7.style.visibility = "visible";
+            obj8.style.visibility = "visible";
+            obj9.style.visibility = "visible";
+            obj10.style.visibility = "visible";
+            obj11.style.visibility = "visible";
+            obj12.style.visibility = "visible";
+
 		}
    }
    function goto_page(page)

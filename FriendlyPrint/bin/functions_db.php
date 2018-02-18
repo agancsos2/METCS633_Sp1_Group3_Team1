@@ -16,6 +16,7 @@
 	require_once("classes/cart.php");
 	require_once("classes/receipt.php");
 	require_once("classes/receipt_order.php");
+	require_once("classes/shipping_option.php");
 
 	//
     // This function validates the credentials that were passed in the login form
@@ -28,6 +29,25 @@
         }
         return False;
     
+	}
+
+	//
+	// This function retrieves the shipping options
+	//
+	function get_shipping_options()
+	{
+		$m_result = array();
+		$getter = mysql_query("select * from shipping_option");
+		while($data = mysql_fetch_assoc($getter))
+		{
+			$temp_option = new ShippingOption();
+			$temp_option->id2 = $data['shipping_option_id'];
+			$temp_option->label = $data['shipping_option_label'];
+			$temp_option->days = $data['shipping_option_days'];
+			$temp_option->fee = $data['shipping_option_fee'];
+			array_push($m_result,$temp_option);
+		}
+		return $m_result;
 	}
 
 	//
@@ -130,6 +150,7 @@
 			$temp_receipt->payment_type = $data['payment_type'];
 			$temp_receipt->payment_detail = $data['payment_detail'];
 			$temp_receipt->last_updated_date = $data['last_updated_date'];
+            $temp_receipt->shipping_option = $data['shipping_speed'];
 			$temp_receipt->payment_date = $data['payment_date'];
 			$temp_orders = array();
         	$getter2 = mysql_query("select * from receipt_order where receipt_id = '" . $temp_receipt->id2 . "'");
@@ -183,6 +204,7 @@
             $temp_receipt->payment_detail = $data['payment_detail'];
             $temp_receipt->last_updated_date = $data['last_updated_date'];
             $temp_receipt->payment_date = $data['payment_date'];
+			$temp_receipt->shipping_option = $data['shipping_speed'];
             $temp_orders = array();
             $getter2 = mysql_query("select * from receipt_order where receipt_id = '" . $temp_receipt->id2 . "'");
 
@@ -226,22 +248,22 @@
 	//
 	function add_order($order)
 	{
-            if($order->quantity > 0)
-            {
-                $sql = "insert into orders (user_id,order_filename,order_sheets,order_size";
-                $sql .= ",order_finish,order_quantity,order_status,order_type) values (";
-                $sql .= ("'" . $order->user2 . "','".$order->filename."','".$order->sheets."',");
-                $sql .= ("'".mysql_real_escape_string($order->size)."','".$order->finish."','".$order->quantity."','");
-                $sql .= ($order->status."','".$order->type2."'");
-                $sql .= ")";
+		if($order->quantity > 0)
+		{
+			$sql = "insert into orders (user_id,order_filename,order_sheets,order_size";
+			$sql .= ",order_finish,order_quantity,order_status,order_type) values (";
+			$sql .= ("'" . $order->user2 . "','".$order->filename."','".$order->sheets."',");
+			$sql .= ("'".mysql_real_escape_string($order->size)."','".$order->finish."','".$order->quantity."','");
+			$sql .= ($order->status."','".$order->type2."'");
+			$sql .= ")";
 
-                if(mysql_query($sql))
-                {
-                    $getter2 = mysql_query("select * from orders order by last_updated_date desc limit 1");
-                    $d = mysql_fetch_assoc($getter2);
-                    mysql_query("insert into cart (user_id,order_id,cart_finalized) values ('".$order->user2."','".$d['order_id']."','0')");
-                }
-            }
+			if(mysql_query($sql))
+			{
+				$getter2 = mysql_query("select * from orders order by last_updated_date desc limit 1");
+				$d = mysql_fetch_assoc($getter2);
+				mysql_query("insert into cart (user_id,order_id,cart_finalized) values ('".$order->user2."','".$d['order_id']."','0')");
+			}
+		}
 	}
 
 	//
@@ -310,6 +332,12 @@
             $total += ((get_price($order->type2,"size",$order->size) +
                     get_price($order->type2,"finish",$order->finish)) *
                     $order->sheets * $order->quantity);
+			if($sp != "Pickup")
+			{
+				$getter = mysql_query("select * from shipping_option where shipping_option_label = '$sp'");
+				$data = mysql_fetch_assoc($getter);
+				$total += $data['shipping_option_fee'];
+			}
 		}
 		if($dis == read_config("./config","DISCOUNT_CODE"))
 		{
