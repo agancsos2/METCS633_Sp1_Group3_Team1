@@ -151,7 +151,7 @@
 
 
 	$sql = "create table if not exists receipt(receipt_id int(255) not null primary key auto_increment,";
-    $sql .= "user_id int(255) not null, receipt_total float(10,2) default '0.00',";
+    $sql .= "user_id int(255) not null, receipt_total float(10,2) default '0.00',shipping_speed varchar(120) default 'Standard'";
     $sql .= "receipt_paid int(1) default '0', payment_type varchar(120), payment_detail varchar(120),";
     $sql .= "last_updated_date timestamp default current_timestamp,payment_date timestamp,";
     $sql .= "foreign key (user_id) references user (user_id))";
